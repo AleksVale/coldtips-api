@@ -1,12 +1,14 @@
+import 'dotenv/config'
 import setupKnex from 'knex'
 
 export const config = {
-  client: 'mysql',
+  client: process.env.DATABASE_CLIENT || 'mysql',
   connection:{
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    database: 'coldtips'
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE
   }
 }
 
