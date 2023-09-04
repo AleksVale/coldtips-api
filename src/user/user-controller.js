@@ -1,13 +1,18 @@
 // user.controller.js
+import { ZodError } from 'zod';
 import { getUsers as _getUsers, getUserById as _getUserById, createUser as _createUser, updateUser as _updateUser, deleteUser as _deleteUser } from './user-service.js';
-
+import { BadRequestError } from '../errors/BadRequestError.js';
 // Retrieve a list of users
 async function getUsers(req, res) {
   try {
     const users = await _getUsers();
-    res.json(users);
+    res.json({ users });
   } catch (error) {
-    res.status(500).json({ error: error });
+    if (error instanceof ZodError) {
+      res.status(400).json({ error: error });
+    } else {
+      throw error;
+    }
   }
 }
 
@@ -22,18 +27,22 @@ async function getUserById(req, res) {
       res.json(user);
     }
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    if (error instanceof ZodError) {
+      res.status(400).json({ error: error });
+    } else {
+      throw error;
+    }
   }
 }
 
 // Create a new user
-async function createUser(req, res) {
-  const newUser = req.body;
+async function createUser(req, res, next) {
   try {
+    const newUser = req.body;
     await _createUser(newUser);
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    next(error);
   }
 }
 
@@ -49,7 +58,11 @@ async function updateUser(req, res) {
       res.status(404).json({ error: 'User not found' });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    if (error instanceof ZodError) {
+      res.status(400).json({ error: error });
+    } else {
+      throw error;
+    }
   }
 }
 
@@ -64,7 +77,11 @@ async function deleteUser(req, res) {
       res.status(404).json({ error: 'User not found' });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    if (error instanceof ZodError) {
+      res.status(400).json({ error: error });
+    } else {
+      throw error;
+    }
   }
 }
 
