@@ -10,7 +10,8 @@
     "start:dev": "nodemon ./app.js",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "build": "npm install && knex migrate:latest"
   },
   "repository": {
     "type": "git",
