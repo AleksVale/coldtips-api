@@ -6,6 +6,7 @@ import { middlewareValidarJWT } from './src/middlewares/authMiddleware.js';
 
 
 const app = express();
+const port = 3000;
 
 app.use(express.json());
 app.use('/api/users',middlewareValidarJWT, userRoutes);
@@ -17,4 +18,6 @@ app.get('/', (req, res) => {
 app.use(errorHandler);
 
 
-app.listen();
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
