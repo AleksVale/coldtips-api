@@ -1,7 +1,6 @@
 // user.controller.js
 import { ZodError } from 'zod';
 import { login } from './auth-service.js';
-// Retrieve a list of users
 async function loginService(req, res, next) {
   try {
     const data = await login(req.body); // Call the login function to get the token
@@ -14,6 +13,7 @@ async function loginService(req, res, next) {
     }
   }
 }
+
 
 export {
   loginService,

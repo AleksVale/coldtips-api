@@ -2,7 +2,9 @@ import { knex } from '../database.js';
 
 export class UserRepository {
   static async getUsers() {
-    return await knex('users').select('*');
+    return await knex('users')
+      .select('users.id','users.email', 'roles.name as role')
+      .join('roles', 'users.role_id', 'roles.id').where('roles.role', '!=', 'admin');    
   }
 
   // Retrieve a single user by ID

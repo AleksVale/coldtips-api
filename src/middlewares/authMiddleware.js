@@ -1,7 +1,8 @@
 import jwtService from 'jsonwebtoken';
 
 export const middlewareValidarJWT = (req, res, next) => {
-  const jwt = req.headers['authorization'].split(' ')[1];
+  const auth = req.headers['authorization'];
+  const jwt = auth ? auth.split(' ')[1] : null;
   const chavePrivada = process.env.JWT_SECRET_KEY;
 
   jwtService.verify(jwt, chavePrivada, (err, userInfo) => {
