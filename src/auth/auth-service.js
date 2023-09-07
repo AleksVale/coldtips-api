@@ -14,12 +14,12 @@ export async function login(data) {
   }
   const userRole = await findRole(user.role_id);
   if (userRole.role === 'admin') {
-    const validPassword = await bcrypt.compare(data.password, user.password);
+    const validPassword = await bcrypt.compare(data.senha, user.password);
     if (!validPassword) {
       throw new BadRequestError('Invalid email or password');
     }
   }
-  return new Promise((resolve, reject) => {
+  const token = await new Promise((resolve, reject) => {
     jwt.sign({sub: user.id, role: userRole.role}, secretKey, {expiresIn: expirationJWT},(err, token) => {
       if (err) {
         reject(err);
@@ -27,5 +27,8 @@ export async function login(data) {
       resolve(token);
     });
   });
- 
+  return {
+    token,
+    userRole,
+  };
 }

@@ -31,7 +31,7 @@ export async function createUser(user) {
   const entity = {
     email: user.email,
     password: hashedPass,
-    role_id:  role.id
+    role_id:  role.id,
   };
   return await UserRepository.insert(entity);
 }
