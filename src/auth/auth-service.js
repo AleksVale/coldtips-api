@@ -14,6 +14,9 @@ export async function login(data) {
   }
   const userRole = await findRole(user.role_id);
   if (userRole.role === 'admin') {
+    if (!data.senha) {
+      throw new BadRequestError('A senha é obrigatória para usuários admins');
+    }
     const validPassword = await bcrypt.compare(data.senha, user.password);
     if (!validPassword) {
       throw new BadRequestError('Invalid email or password');

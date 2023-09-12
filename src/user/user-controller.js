@@ -1,12 +1,15 @@
 // user.controller.js
 import { ZodError } from 'zod';
 import { getUsers as _getUsers, getUserById as _getUserById, createUser as _createUser, updateUser as _updateUser, deleteUser as _deleteUser } from './user-service.js';
-import { BadRequestError } from '../errors/BadRequestError.js';
 // Retrieve a list of users
 async function getUsers(req, res) {
   try {
-    const users = await _getUsers();
-    res.json({ users });
+    if (req.userInfo.role !== 'admin') {
+      res.status(401).json({ error: 'Usuário não autorizado' });
+    } else {
+      const users = await _getUsers();
+      res.json({ users });
+    }
   } catch (error) {
     if (error instanceof ZodError) {
       res.status(400).json({ error: error });
