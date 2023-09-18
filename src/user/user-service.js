@@ -38,7 +38,11 @@ export async function createUser(user) {
 
 // Update a user by ID
 export async function updateUser(userId, updatedUser) {
-  return await knex('users').where({ id: userId }).update(updatedUser);
+  return await UserRepository.updateUser(userId, updatedUser);
+}
+
+export async function changeUserStatus(userId, role) {
+  return await UserRepository.updateUser(userId, {role_id: role});
 }
 
 // Delete a user by ID

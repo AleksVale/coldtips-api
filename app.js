@@ -1,5 +1,6 @@
 import express from 'express';
 import userRoutes from './src/user/user-routes.js';
+import gameRoutes from './src/games/games-routes.js';
 import authRoutes from './src/auth/auth-routes.js';
 import perfectpayRoutes from './src/perfectpay/perfectpay-routes.js';
 import { errorHandler } from './src/middlewares/errorHandler.js';
@@ -13,6 +14,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use('/api/users',middlewareValidarJWT, userRoutes);
+app.use('/api/game_history',middlewareValidarJWT,gameRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/perfectpay', perfectpayRoutes);
 app.get('/', (req, res) => {
