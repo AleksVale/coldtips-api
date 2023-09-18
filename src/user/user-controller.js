@@ -75,7 +75,7 @@ async function changeStatus(req, res,next) {
   try {
     const userId = parseInt(req.params.id, 10);
     const role = req.body.role;
-  
+    
     // Validate the parameters
     const validatedRole = validateUpdateStatus.parse(role);
     const user = await _getUserById(userId);

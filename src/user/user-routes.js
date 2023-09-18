@@ -4,9 +4,9 @@ import { getUsers, getUserById, createUser, updateUser, deleteUser,changeStatus 
 
 // Define user routes
 router.get('/', getUsers);
+router.patch('/:id/change-status', changeStatus);
 router.get('/:id', getUserById);
 router.post('/', createUser);
-router.patch('/:id/change-status', changeStatus);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 
