@@ -1,3 +1,3 @@
-import { config } from "./src/database.js";
+import { config } from './src/database.js';
 
-export default config
+export default config;
