@@ -1,10 +1,22 @@
 import { knex } from '../database.js';
 
 export class UserRepository {
-  static async getUsers() {
+  static async getUsers({roleName, email}) {
+    console.log(roleName, email);
     return await knex('users')
       .select('users.id','users.email', 'roles.name as role')
-      .join('roles', 'users.role_id', 'roles.id').where('roles.role', '!=', 'admin');    
+      .join('roles', 'users.role_id', 'roles.id').where('roles.role', '!=', 'admin')
+      .modify(function(queryBuilder) {
+        if (roleName) {
+          queryBuilder.where('roles.name', roleName);
+        }
+      })
+      .modify(function(queryBuilder) {
+        if (email) {
+          queryBuilder.whereILike('users.email', `%${email}%`);
+        }
+      })    
+    ;    
   }
 
   // Retrieve a single user by ID

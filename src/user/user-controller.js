@@ -9,7 +9,9 @@ async function getUsers(req, res,next) {
     if (req.userInfo.role !== 'admin') {
       res.status(401).json({ error: 'Usuário não autorizado' });
     } else {
-      const users = await _getUsers();
+      const roleName = req.query.role;
+      const email = req.query.email;
+      const users = await _getUsers({roleName, email});
       res.json({ users });
     }
   } catch (error) {

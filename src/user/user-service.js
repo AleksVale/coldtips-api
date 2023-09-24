@@ -6,8 +6,8 @@ import {BadRequestError} from '../errors/BadRequestError.js';
 import { getRole } from '../role/role-service.js';
 
 
-export async function getUsers() {
-  const users = UserRepository.getUsers();
+export async function getUsers({roleName, email}) {
+  const users = UserRepository.getUsers({roleName, email});
   return users;
 }
 

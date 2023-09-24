@@ -1,13 +1,14 @@
 import sgMail from '@sendgrid/mail';
 
-export function sendEmail() {
+export function sendEmail({email, subject, message, html}) {
   sgMail.setApiKey(process.env.SG_KEY);
+
   const msg = {
-    to: 'alexalexx3@gmail.com', // Change to your recipient
+    to: email, // Change to your recipient
     from: 'noreply@coldtipz.com', // Change to your verified sender
-    subject: 'Sending with SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    subject: subject,
+    text: message,
+    html: html,
   };
   sgMail
     .send(msg)

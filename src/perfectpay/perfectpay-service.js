@@ -1,5 +1,10 @@
 import { UserRepository } from '../user/user-repository.js';
 import { getRole } from '../role/role-service.js';
+import path from 'path';
+import pug from 'pug';
+import { sendEmail } from '../providers/email.provider.js';
+import { fileURLToPath } from 'url';
+
 const SalesStatusEnum = {
   0: 'none',
   1: 'pending', // boleto pendente
@@ -28,11 +33,21 @@ export async function createUserWebhook(body) {
   const existingUser = await getUser(userEmail);
   if (sale === 'approved' || sale === 'authorized') {
     const entity = {
+      name: body.customer.full_name,
       email: userEmail,
       role_id: roleAdmin.id,
       phone_number: phoneNumber,
     };
     existingUser ? await UserRepository.updateUser(existingUser.id, entity) : await UserRepository.insert(entity);
+    const __filename = fileURLToPath(import.meta.url);
+
+    // Obtenha o diretório do arquivo
+    const __dirname = path.dirname(__filename);
+    const emailTemplate = pug.compileFile(path.join(__dirname, 'email.pug'));
+
+    // Renderize o template com dados específicos
+    const html = emailTemplate();
+    sendEmail({email: userEmail, html, subject: 'Bem vindo ao ColdTipz', message: 'Bem vindo ao ColdTipz2'});
   } else if (sale === 'refunded' || sale === 'charged_back') {
     const entity = {
       email: userEmail,

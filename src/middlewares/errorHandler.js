@@ -1,9 +1,13 @@
 import {BadRequestError} from '../errors/BadRequestError.js';
 import { ZodError } from 'zod';
+import { NotFoundException } from '../errors/NotFoundException.js';
 
 
 export function errorHandler(err, _req, res, _next) {
   if (err instanceof BadRequestError) {
+    res.status(err.status).json({ err: err.message }).end();
+  }
+  if (err instanceof NotFoundException) {
     res.status(err.status).json({ err: err.message }).end();
   }
   else if (err instanceof ZodError) {

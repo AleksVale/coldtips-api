@@ -7,7 +7,7 @@ export const middlewareValidarJWT = (req, res, next) => {
 
   jwtService.verify(jwt, chavePrivada, (err, userInfo) => {
     if (err) {
-      res.status(403).json('Usuário não autorizado').end();
+      res.status(401).json('Usuário não autorizado').end();
       return;
     }
 
