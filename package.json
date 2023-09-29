@@ -11,7 +11,7 @@
         "migrate": "knex migrate:latest",
         "rollback": "knex migrate:rollback",
         "seed": "knex seed:run",
-        "build": "npm install && knex migrate:latest"
+        "build": "npm install && knex migrate:latest && knex seed:run"
     },
     "repository": {
         "type": "git",

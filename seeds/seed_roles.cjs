@@ -1,6 +1,6 @@
 // seeds/seed_roles.js
 exports.seed = function (knex) {
-  // Deletes ALL existing entries
+  if (knex('roles').select('*').length > 0) return Promise.resolve();
   return knex('roles')
     .del()
     .then(function () {
