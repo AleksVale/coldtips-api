@@ -26,7 +26,7 @@ export async function login(data) {
   const token = await new Promise((resolve, reject) => {
     jwt.sign({sub: user.id, role: userRole.role}, secretKey, {expiresIn: expirationJWT},(err, token) => {
       if (err) {
-        reject(err);
+        throw new BadRequestError(err);
       }
       resolve(token);
     });

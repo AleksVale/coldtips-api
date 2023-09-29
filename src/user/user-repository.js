@@ -2,9 +2,8 @@ import { knex } from '../database.js';
 
 export class UserRepository {
   static async getUsers({roleName, email}) {
-    console.log(roleName, email);
     return await knex('users')
-      .select('users.id','users.email', 'roles.name as role')
+      .select('users.id','users.email', 'roles.name as role', 'users.name as name', 'users.phone_number as phone_number')
       .join('roles', 'users.role_id', 'roles.id').where('roles.role', '!=', 'admin')
       .modify(function(queryBuilder) {
         if (roleName) {

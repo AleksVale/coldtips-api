@@ -29,7 +29,9 @@ export async function createUser(user) {
   const hashedPass = user.password ?  await bcrypt.hash(user.password, 10) : null;
   const role = await getRole(user.role);
   const entity = {
+    name: user.name,
     email: user.email,
+    phone_number: user.phone,
     password: hashedPass,
     role_id:  role.id,
   };
