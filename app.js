@@ -14,7 +14,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use('/api/users',middlewareValidarJWT, userRoutes);
-app.use('/api/game_history',gameRoutes);
+app.use('/api/game_history',middlewareValidarJWT, gameRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/perfectpay', perfectpayRoutes);
 app.get('/', (req, res) => {
